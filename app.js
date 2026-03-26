@@ -20,6 +20,9 @@ const reposLastUpdated = (repos) => {
     .slice(0, 5);
 };
 
+const reposSumStars = (repos) => {
+    return repos.reduce((acc, currentValue) => acc + currentValue.stargazers_count , 0)
+}
 
 app.get('/more-than-5-stars', async (req, res) => {
   try {
@@ -47,6 +50,22 @@ app.get('/last-updated', async (req, res) => {
     });
 
     res.json(reposLastUpdated(response.data));
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to fetch repos' });
+  }
+});
+
+app.get('/sum-stars', async (req, res) => {
+  try {
+    const response = await octokit.request('GET /orgs/{org}/repos', {
+      org: 'stackbuilders',
+      headers: {
+        'X-GitHub-Api-Version': '2026-03-10'
+      }
+    });
+
+    res.json(reposSumStars(response.data));
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to fetch repos' });
