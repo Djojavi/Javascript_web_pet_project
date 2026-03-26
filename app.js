@@ -1,8 +1,12 @@
 import { Octokit, App } from "octokit";
 import express from 'express';
+import path from 'path';
+import { fileURLToPath } from "url";
 
 const app = express();
 const PORT = 3000;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const octokit = new Octokit({
   auth: process.env.GIT_TOKEN
@@ -23,6 +27,10 @@ const reposLastUpdated = (repos) => {
 const reposSumStars = (repos) => {
     return repos.reduce((acc, currentValue) => acc + currentValue.stargazers_count , 0)
 }
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+})
 
 app.get('/more-than-5-stars', async (req, res) => {
   try {
