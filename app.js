@@ -9,9 +9,16 @@ const octokit = new Octokit({
 })
 
 //helper functions
-function reposWith5StarsOrHigher(repos){
-    return repos.filter(r => r.stargazers_count >= 5);
+const reposWith5StarsOrHigher = (repos) => {
+    return repos
+        .filter(r => r.stargazers_count >= 5);
 }
+
+const reposLastUpdated = (repos) => {
+  return repos
+    .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
+    .slice(0, 5);
+};
 
 
 app.get('/more-than-5-stars', async (req, res) => {
@@ -39,7 +46,7 @@ app.get('/last-updated', async (req, res) => {
       }
     });
 
-    res.json(reposWith5StarsOrHigher(response.data));
+    res.json(reposLastUpdated(response.data));
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to fetch repos' });
