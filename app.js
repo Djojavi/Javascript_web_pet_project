@@ -35,7 +35,9 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 })
 
-app.get('/more-than-5-stars', async (req, res) => {
+app.get('/api/v2/repos', async (req, res) => {
+  const { filter } = req.query;
+
   try {
     const response = await octokit.request('GET /orgs/{org}/repos', {
       org: 'stackbuilders',
@@ -44,39 +46,28 @@ app.get('/more-than-5-stars', async (req, res) => {
       }
     });
 
-    res.json(reposWith5StarsOrHigher(response.data));
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to fetch repos' });
-  }
-});
+    const repos = response.data;
 
-app.get('/last-updated', async (req, res) => {
-  try {
-    const response = await octokit.request('GET /orgs/{org}/repos', {
-      org: 'stackbuilders',
-      headers: {
-        'X-GitHub-Api-Version': '2026-03-10'
-      }
-    });
+    let result;
 
-    res.json(reposLastUpdated(response.data));
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to fetch repos' });
-  }
-});
+    switch (filter) {
+      case 'more-than-5-stars':
+        result = reposWith5StarsOrHigher(repos);
+        break;
 
-app.get('/sum-stars', async (req, res) => {
-  try {
-    const response = await octokit.request('GET /orgs/{org}/repos', {
-      org: 'stackbuilders',
-      headers: {
-        'X-GitHub-Api-Version': '2026-03-10'
-      }
-    });
+      case 'last-updated':
+        result = reposLastUpdated(repos);
+        break;
 
-    res.json(reposSumStars(response.data));
+      case 'sum-stars':
+        result = reposSumStars(repos);
+        break;
+
+      default:
+        result = repos;
+    }
+
+    res.json(result);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to fetch repos' });
