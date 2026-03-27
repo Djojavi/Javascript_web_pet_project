@@ -26,7 +26,9 @@ const reposLastUpdated = (repos) => {
 };
 
 const reposSumStars = (repos) => {
-  return repos.reduce((acc, currentValue) => acc + currentValue.stargazers_count, 0)
+  return repos
+    .filter(r => r.stargazers_count)
+    .reduce((acc, currentValue) => acc + currentValue.stargazers_count, 0)
 }
 
 app.get('/', (req, res) => {

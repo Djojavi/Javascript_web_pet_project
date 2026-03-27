@@ -207,3 +207,60 @@ test("returns a list with the last updated repos and skips the ones without upda
     ]);
 });
 
+//------------------TESTS: Sum of all repository stars ------------------
+//happy path
+test("adds the stargazers_count attribute", async () => {
+  server.use(
+    http.get("https://api.github.com/orgs/stackbuilders/repos", () => {
+      return HttpResponse.json([
+        { name: "repo1", stargazers_count: 1, updated_at: "2026-05-01T01:00:00Z" },
+        { name: "repo2", stargazers_count: 2, updated_at: "2026-05-01T02:00:00Z" },
+        { name: "repo3", stargazers_count: 3, updated_at: "2026-05-01T03:00:00Z" },
+        { name: "repo4", stargazers_count: 4, updated_at: "2026-05-01T04:00:00Z" },
+        { name: "repo5", stargazers_count: 5, updated_at: "2026-05-01T05:00:00Z" },
+      ]);
+    })
+  );
+
+  const res = await request(app).get("/sum-stars");
+
+  expect(res.body).toBe(15)
+});
+
+//missing stargazers_count
+test("doesn't add if stargazers_count is missing", async () => {
+  server.use(
+    http.get("https://api.github.com/orgs/stackbuilders/repos", () => {
+      return HttpResponse.json([
+        { name: "repo1", updated_at: "2026-05-01T01:00:00Z" },
+        { name: "repo2", stargazers_count: 2, updated_at: "2026-05-01T02:00:00Z" },
+        { name: "repo3", stargazers_count: 3, updated_at: "2026-05-01T03:00:00Z" },
+        { name: "repo4", updated_at: "2026-05-01T04:00:00Z" },
+        { name: "repo5", stargazers_count: 5, updated_at: "2026-05-01T05:00:00Z" },
+      ]);
+    })
+  );
+
+  const res = await request(app).get("/sum-stars");
+
+  expect(res.body).toBe(10)
+});
+
+
+//big number of stars
+test("adds the stargazers_count attribute", async () => {
+  server.use(
+    http.get("https://api.github.com/orgs/stackbuilders/repos", () => {
+      return HttpResponse.json([
+        { name: "repo1", stargazers_count: 150, updated_at: "2026-05-01T01:00:00Z" },
+        { name: "repo2", stargazers_count: 2000, updated_at: "2026-05-01T02:00:00Z" },
+        { name: "repo3", stargazers_count: 310, updated_at: "2026-05-01T03:00:00Z" },
+        { name: "repo4", stargazers_count: 500, updated_at: "2026-05-01T04:00:00Z" },
+      ]);
+    })
+  );
+
+  const res = await request(app).get("/sum-stars");
+
+  expect(res.body).toBe(2960)
+});
