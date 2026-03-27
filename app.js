@@ -35,17 +35,14 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 })
 
-app.get('/api/v2/repos', async (req, res) => {
+app.get('/api/v2/repos', (req, res) => {
   const { filter } = req.query;
-
-  try {
-    const response = await octokit.request('GET /orgs/{org}/repos', {
-      org: 'stackbuilders',
-      headers: {
-        'X-GitHub-Api-Version': '2026-03-10'
-      }
-    });
-
+  octokit.request('GET /orgs/{org}/repos', {
+    org: 'stackbuilders',
+    headers: {
+      'X-GitHub-Api-Version': '2026-03-10'
+    }
+  }).then(response => {
     const repos = response.data;
 
     let result;
@@ -68,10 +65,11 @@ app.get('/api/v2/repos', async (req, res) => {
     }
 
     res.json(result);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to fetch repos' });
-  }
+  })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'Failed to fetch repos' });
+    });
 });
 
 app.listen(PORT, () => {
