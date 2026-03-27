@@ -3,7 +3,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from "url";
 
-const app = express();
+export const app = express();
 const PORT = 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -83,3 +83,10 @@ app.get('/sum-stars', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+export {
+  reposLastUpdated,
+  reposSumStars,
+  reposWith5StarsOrHigher,
+};
+export default app;
