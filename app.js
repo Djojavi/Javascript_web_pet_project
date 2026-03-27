@@ -14,18 +14,19 @@ const octokit = new Octokit({
 
 //helper functions
 const reposWith5StarsOrHigher = (repos) => {
-    return repos
-        .filter(r => r.stargazers_count >= 5);
+  return repos
+    .filter(r => r.stargazers_count >= 5);
 }
 
 const reposLastUpdated = (repos) => {
   return repos
+    .filter(r => r.updated_at)
     .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
     .slice(0, 5);
 };
 
 const reposSumStars = (repos) => {
-    return repos.reduce((acc, currentValue) => acc + currentValue.stargazers_count , 0)
+  return repos.reduce((acc, currentValue) => acc + currentValue.stargazers_count, 0)
 }
 
 app.get('/', (req, res) => {
