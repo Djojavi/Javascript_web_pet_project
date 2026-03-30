@@ -20,9 +20,10 @@ const reposWith5StarsOrHigher = (repos: Repo[]) => {
   return repos
     .filter(r => r.stargazers_count >= 5);
 }
-  
+
 const reposWithMostStars = (repos: Repo[]) => {
   return repos
+    .filter(r => r.stargazers_count)
     .sort((a, b) => b.stargazers_count - a.stargazers_count)
     .slice(0, 5);
 }
@@ -44,7 +45,7 @@ const removeReposWithH = (repos: Repo[]) => {
   return repos.filter(r => !r.name.toLowerCase().startsWith('h'));
 }
 
-const sortReposAlphabetically = (repos: Repo[]) => {  
+const sortReposAlphabetically = (repos: Repo[]) => {
   return repos.sort((a, b) => a.name.localeCompare(b.name));
 }
 
