@@ -2,7 +2,7 @@ import { Octokit, App } from "octokit";
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from "url";
-import { components } from "@octokit/openapi-types";
+import type { components } from "@octokit/openapi-types";
 
 type Repo = components["schemas"]["repository"];
 

@@ -12,11 +12,6 @@
     "type": "git",
     "url": "git+https://github.com/Djojavi/Javascript_web_pet_project.git"
   },
-  "jest": {
-    "setupFilesAfterEnv": [
-      "<rootDir>/tests/mocks/setupTests.js"
-    ]
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
