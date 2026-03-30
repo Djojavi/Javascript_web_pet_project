@@ -2,6 +2,9 @@ import { Octokit, App } from "octokit";
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from "url";
+import { components } from "@octokit/openapi-types";
+
+type Repo = components["schemas"]["repository"];
 
 export const app = express();
 const PORT = 3000;
@@ -13,19 +16,19 @@ const octokit = new Octokit({
 })
 
 //helper functions
-const reposWith5StarsOrHigher = (repos) => {
+const reposWith5StarsOrHigher = (repos: Repo[]) => {
   return repos
     .filter(r => r.stargazers_count >= 5);
 }
 
-const reposLastUpdated = (repos) => {
+const reposLastUpdated = (repos: Repo[]) => {
   return repos
-    .filter(r => r.updated_at)
-    .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
+    .filter((r): r is Repo & { updated_at: string } => typeof r.updated_at === 'string')
+    .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
     .slice(0, 5);
 };
 
-const reposSumStars = (repos) => {
+const reposSumStars = (repos: Repo[]) => {
   return repos
     .filter(r => r.stargazers_count)
     .reduce((acc, currentValue) => acc + currentValue.stargazers_count, 0)
@@ -43,7 +46,7 @@ app.get('/api/v2/repos', (req, res) => {
       'X-GitHub-Api-Version': '2026-03-10'
     }
   }).then(response => {
-    const repos = response.data;
+    const repos: Repo[] = response.data as any;
 
     let result;
 
