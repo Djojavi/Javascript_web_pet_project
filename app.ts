@@ -20,6 +20,12 @@ const reposWith5StarsOrHigher = (repos: Repo[]) => {
   return repos
     .filter(r => r.stargazers_count >= 5);
 }
+  
+const reposWithMostStars = (repos: Repo[]) => {
+  return repos
+    .sort((a, b) => b.stargazers_count - a.stargazers_count)
+    .slice(0, 5);
+}
 
 const reposLastUpdated = (repos: Repo[]) => {
   return repos
@@ -32,6 +38,14 @@ const reposSumStars = (repos: Repo[]) => {
   return repos
     .filter(r => r.stargazers_count)
     .reduce((acc, currentValue) => acc + currentValue.stargazers_count, 0)
+}
+
+const removeReposWithH = (repos: Repo[]) => {
+  return repos.filter(r => !r.name.toLowerCase().startsWith('h'));
+}
+
+const sortReposAlphabetically = (repos: Repo[]) => {  
+  return repos.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 app.get('/', (req, res) => {
@@ -61,6 +75,14 @@ app.get('/api/v2/repos', (req, res) => {
 
       case 'sum-stars':
         result = reposSumStars(repos);
+        break;
+
+      case 'most-stars':
+        result = reposWithMostStars(repos);
+        break;
+
+      case 'alphabetical':
+        result = sortReposAlphabetically(removeReposWithH(repos));
         break;
 
       default:
