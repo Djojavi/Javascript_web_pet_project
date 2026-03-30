@@ -130,8 +130,124 @@ describe("GET api/v2/repos?filter=most-stars", () => {
     });
   });
 });
-//------------------TESTS: repos alphabetically and without the letter "h" ------------------
 
+//------------------TESTS: repos alphabetically and without the letter "h" ------------------
+describe("GET api/v2/repos?filter=alphabetical", () => {
+  afterEach(() => server.resetHandlers());
+
+  describe("when every repo starts with h", () => {
+    it("should return an empty list", async () => {
+      server.use(
+        http.get("https://api.github.com/orgs/stackbuilders/repos", () => {
+          return HttpResponse.json([
+            { name: "hrepo1", stargazers_count: 5, updated_at: "2026-01-01T00:00:00Z" },
+            { name: "hrepo2", stargazers_count: 5, updated_at: "2026-01-01T00:00:00Z" },
+            { name: "hrepo3", stargazers_count: 5, updated_at: "2026-01-01T00:00:00Z" },
+            { name: "hrepo4", stargazers_count: 5, updated_at: "2026-01-01T00:00:00Z" },
+            { name: "hrepo5", stargazers_count: 5, updated_at: "2026-01-01T00:00:00Z" },
+            { name: "hrepo6", stargazers_count: 5, updated_at: "2026-01-01T00:00:00Z" },
+            { name: "hrepo7", stargazers_count: 5, updated_at: "2026-01-01T00:00:00Z" },
+          ]);
+        })
+      );
+
+      const res = await request(app).get("/api/v2/repos?filter=alphabetical");
+
+      expect(res.body).toEqual([]);
+    });
+
+  });
+
+  describe("when there are no repos", () => {
+    it("should return an empty list ", async () => {
+      server.use(
+        http.get("https://api.github.com/orgs/stackbuilders/repos", () => {
+          return HttpResponse.json([
+          ]);
+        })
+      );
+
+      const res = await request(app).get("/api/v2/repos?filter=alphabetical");
+
+      expect(res.body).toEqual([]);
+    });
+  });
+
+  describe("when each repo has a different name", () => {
+    it("should return the repos ordered alphabetically and without the letter 'h'", async () => {
+      server.use(
+        http.get("https://api.github.com/orgs/stackbuilders/repos", () => {
+          return HttpResponse.json([
+            { name: "hello", stargazers_count: 5, updated_at: "2026-01-01T00:00:00Z" },
+            { name: "typescript", stargazers_count: 6, updated_at: "2026-01-01T00:00:00Z" },
+            { name: "huskell", stargazers_count: 7, updated_at: "2026-01-01T00:00:00Z" },
+            { name: "python", stargazers_count: 8, updated_at: "2026-01-01T00:00:00Z" },
+            { name: "cpp", stargazers_count: 9, updated_at: "2026-01-01T00:00:00Z" },
+            { name: "django", stargazers_count: 10, updated_at: "2026-01-01T00:00:00Z" },
+            { name: "html", stargazers_count: 11, updated_at: "2026-01-01T00:00:00Z" },
+          ]);
+        })
+      );
+
+      const res = await request(app).get("/api/v2/repos?filter=alphabetical");
+
+      expect(res.body).toEqual([
+        { name: "cpp", stargazers_count: 9, updated_at: "2026-01-01T00:00:00Z" },
+        { name: "django", stargazers_count: 10, updated_at: "2026-01-01T00:00:00Z" },
+        { name: "python", stargazers_count: 8, updated_at: "2026-01-01T00:00:00Z" },
+        { name: "typescript", stargazers_count: 6, updated_at: "2026-01-01T00:00:00Z" },
+      ]);
+    });
+
+    it("should return the  repos sorted alphabetically", async () => {
+      server.use(
+        http.get("https://api.github.com/orgs/stackbuilders/repos", () => {
+          return HttpResponse.json([
+            { name: "typescript", stargazers_count: 6, updated_at: "2026-01-01T00:00:00Z" },
+            { name: "python", stargazers_count: 8, updated_at: "2026-01-01T00:00:00Z" },
+            { name: "cpp", stargazers_count: 9, updated_at: "2026-01-01T00:00:00Z" },
+            { name: "django", stargazers_count: 10, updated_at: "2026-01-01T00:00:00Z" },
+          ]);
+        })
+      );
+
+      const res = await request(app).get("/api/v2/repos?filter=alphabetical");
+
+      expect(res.body).toEqual([
+        { name: "cpp", stargazers_count: 9, updated_at: "2026-01-01T00:00:00Z" },
+        { name: "django", stargazers_count: 10, updated_at: "2026-01-01T00:00:00Z" },
+        { name: "python", stargazers_count: 8, updated_at: "2026-01-01T00:00:00Z" },
+        { name: "typescript", stargazers_count: 6, updated_at: "2026-01-01T00:00:00Z" },
+      ]);
+    });
+  });
+
+  describe("when some repos don't have name attribute", () => {
+    it("should skip repos with missing attribute name and order and remove the ones that start with h", async () => {
+      server.use(
+        http.get("https://api.github.com/orgs/stackbuilders/repos", () => {
+          return HttpResponse.json([
+            { name: null, stargazers_count: 5, updated_at: "2026-01-01T00:00:00Z" },
+            { name: "typescript", stargazers_count: 6, updated_at: "2026-01-01T00:00:00Z" },
+            { name: "huskell", stargazers_count: 7, updated_at: "2026-01-01T00:00:00Z" },
+            { name: null, stargazers_count: 8, updated_at: "2026-01-01T00:00:00Z" },
+            { name: "cpp", stargazers_count: 9, updated_at: "2026-01-01T00:00:00Z" },
+            { name: "django", stargazers_count: 10, updated_at: "2026-01-01T00:00:00Z" },
+            { name: "html", stargazers_count: 11, updated_at: "2026-01-01T00:00:00Z" },
+          ]);
+        })
+      );
+
+      const res = await request(app).get("/api/v2/repos?filter=alphabetical");
+
+      expect(res.body).toEqual([
+        { name: "cpp", stargazers_count: 9, updated_at: "2026-01-01T00:00:00Z" },
+        { name: "django", stargazers_count: 10, updated_at: "2026-01-01T00:00:00Z" },
+        { name: "typescript", stargazers_count: 6, updated_at: "2026-01-01T00:00:00Z" },
+      ]);
+    });
+  });
+});
 //------------------TESTS: repos with 5 stars or more ------------------
 
 describe("GET api/v2/repos?filter=more-than-5-stars", () => {
@@ -345,7 +461,6 @@ describe("GET api/v2/repos?filter=last-updated", () => {
 });
 
 //------------------TESTS: Sum of all repository stars ------------------
-
 describe("GET api/v2/repos?filter=sum-stars", () => {
   afterEach(() => server.resetHandlers());
 
@@ -407,4 +522,4 @@ describe("GET api/v2/repos?filter=sum-stars", () => {
       expect(res.body).toBe(2960);
     });
   });
-});
+}); 

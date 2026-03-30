@@ -42,11 +42,14 @@ const reposSumStars = (repos: Repo[]) => {
 }
 
 const removeReposWithH = (repos: Repo[]) => {
-  return repos.filter(r => !r.name.toLowerCase().startsWith('h'));
+  return repos
+    .filter(r => r.name)
+    .filter(r => !r.name.toLowerCase().startsWith('h'));
 }
 
 const sortReposAlphabetically = (repos: Repo[]) => {
-  return repos.sort((a, b) => a.name.localeCompare(b.name));
+  return repos
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
 app.get('/', (req, res) => {
