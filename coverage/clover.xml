@@ -1,59 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1774621363863" clover="3.2.0">
-  <project timestamp="1774621363863" name="All files">
-    <metrics statements="41" coveredstatements="33" conditionals="0" coveredconditionals="0" methods="14" coveredmethods="12" elements="55" coveredelements="45" complexity="0" loc="41" ncloc="41" packages="2" files="3" classes="3"/>
+<coverage generated="1774892204774" clover="3.2.0">
+  <project timestamp="1774892204774" name="All files">
+    <metrics statements="53" coveredstatements="48" conditionals="6" coveredconditionals="5" methods="22" coveredmethods="19" elements="81" coveredelements="72" complexity="0" loc="53" ncloc="53" packages="2" files="3" classes="3"/>
     <package name="js_petProject">
-      <metrics statements="38" coveredstatements="31" conditionals="0" coveredconditionals="0" methods="13" coveredmethods="12"/>
-      <file name="app.js" path="/home/djaramillo/Documents/js_petProject/app.js">
-        <metrics statements="38" coveredstatements="31" conditionals="0" coveredconditionals="0" methods="13" coveredmethods="12"/>
-        <line num="6" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
+      <metrics statements="50" coveredstatements="46" conditionals="6" coveredconditionals="5" methods="21" coveredmethods="19"/>
+      <file name="app.ts" path="/home/djaramillo/Documents/js_petProject/app.ts">
+        <metrics statements="50" coveredstatements="46" conditionals="6" coveredconditionals="5" methods="21" coveredmethods="19"/>
         <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
         <line num="11" count="1" type="stmt"/>
-        <line num="16" count="1" type="stmt"/>
-        <line num="17" count="4" type="stmt"/>
-        <line num="18" count="9" type="stmt"/>
-        <line num="21" count="1" type="stmt"/>
-        <line num="22" count="4" type="stmt"/>
-        <line num="23" count="40" type="stmt"/>
-        <line num="24" count="30" type="stmt"/>
-        <line num="28" count="1" type="stmt"/>
-        <line num="29" count="3" type="stmt"/>
-        <line num="30" count="14" type="stmt"/>
-        <line num="31" count="12" type="stmt"/>
-        <line num="34" count="1" type="stmt"/>
-        <line num="35" count="0" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="4" type="stmt"/>
+        <line num="21" count="9" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="5" type="stmt"/>
+        <line num="26" count="25" type="stmt"/>
+        <line num="27" count="18" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="4" type="stmt"/>
+        <line num="33" count="40" type="stmt"/>
+        <line num="34" count="30" type="stmt"/>
         <line num="38" count="1" type="stmt"/>
-        <line num="39" count="4" type="stmt"/>
-        <line num="40" count="4" type="stmt"/>
-        <line num="47" count="4" type="stmt"/>
-        <line num="49" count="0" type="stmt"/>
-        <line num="50" count="0" type="stmt"/>
-        <line num="54" count="1" type="stmt"/>
-        <line num="55" count="4" type="stmt"/>
-        <line num="56" count="4" type="stmt"/>
-        <line num="63" count="4" type="stmt"/>
-        <line num="65" count="0" type="stmt"/>
-        <line num="66" count="0" type="stmt"/>
-        <line num="70" count="1" type="stmt"/>
-        <line num="71" count="3" type="stmt"/>
-        <line num="72" count="3" type="stmt"/>
-        <line num="79" count="3" type="stmt"/>
-        <line num="81" count="0" type="stmt"/>
-        <line num="82" count="0" type="stmt"/>
-        <line num="86" count="1" type="stmt"/>
-        <line num="87" count="1" type="stmt"/>
+        <line num="39" count="3" type="stmt"/>
+        <line num="40" count="14" type="stmt"/>
+        <line num="41" count="12" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="45" count="5" type="stmt"/>
+        <line num="46" count="25" type="stmt"/>
+        <line num="47" count="23" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="51" count="5" type="stmt"/>
+        <line num="52" count="14" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="59" count="1" type="stmt"/>
+        <line num="60" count="21" type="stmt"/>
+        <line num="61" count="21" type="stmt"/>
+        <line num="67" count="21" type="stmt"/>
+        <line num="71" count="21" type="cond" truecount="5" falsecount="1"/>
+        <line num="73" count="4" type="stmt"/>
+        <line num="74" count="4" type="stmt"/>
+        <line num="77" count="4" type="stmt"/>
+        <line num="78" count="4" type="stmt"/>
+        <line num="81" count="3" type="stmt"/>
+        <line num="82" count="3" type="stmt"/>
+        <line num="85" count="5" type="stmt"/>
+        <line num="86" count="5" type="stmt"/>
+        <line num="89" count="5" type="stmt"/>
+        <line num="90" count="5" type="stmt"/>
+        <line num="93" count="0" type="stmt"/>
+        <line num="96" count="21" type="stmt"/>
+        <line num="99" count="0" type="stmt"/>
+        <line num="100" count="0" type="stmt"/>
+        <line num="104" count="1" type="stmt"/>
+        <line num="105" count="1" type="stmt"/>
       </file>
     </package>
     <package name="js_petProject.tests.mocks">
       <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-      <file name="handlers.js" path="/home/djaramillo/Documents/js_petProject/tests/mocks/handlers.js">
+      <file name="handlers.ts" path="/home/djaramillo/Documents/js_petProject/tests/mocks/handlers.ts">
         <metrics statements="2" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="3" count="1" type="stmt"/>
         <line num="5" count="0" type="stmt"/>
       </file>
-      <file name="server.js" path="/home/djaramillo/Documents/js_petProject/tests/mocks/server.js">
+      <file name="server.ts" path="/home/djaramillo/Documents/js_petProject/tests/mocks/server.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="4" count="1" type="stmt"/>
       </file>
