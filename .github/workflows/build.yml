@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build
-        run: npm run start
+        run: npx tsx app.ts
   test:
     needs: build
     runs-on: ubuntu-latest
