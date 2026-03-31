@@ -7,23 +7,27 @@ on:
     branches: [main]
 
 jobs:
-  install-dependencies:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
       - name: Install dependencies
         run: npm install
-  build:
-    needs: install-dependencies
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Build
+      - name: Run app
         run: npx tsx app.ts
+
   test:
-    needs: build
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm install
       - name: Test
         run: npm test
