@@ -1,4 +1,4 @@
-{
+  {
   "name": "js_petproject",
   "version": "1.0.0",
   "type": "module",
@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "dev": "nodemon app.js"
+    "start": "tsx app.ts"
   },
   "repository": {
     "type": "git",
